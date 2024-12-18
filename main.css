@@ -8,19 +8,25 @@ body {
     align-items: center;
     justify-content: center;
 }
+h1 {
+    font-size: 3rem;
+    margin-top: 3rem;
+    -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: rgb(93, 140, 234);
+   animation: fadeDown 1700ms ease-in-out forwards;
 
+}
 .big-wrapper {
     display: flex;
     flex-direction: column;
-    margin-top: 10vh;
+    margin-top: 5vh;
+    width: 90%;
 }
 
 .upper-window,
 .lower-window {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     background-color: white;
     margin-bottom: auto;
     padding: 20px;
@@ -30,6 +36,10 @@ body {
 
 .lower-window{
     margin-top: 3rem;
+    animation: fadeLeft 1700ms ease-in-out forwards;
+}
+.upper-window {
+    animation: fadeRight 1700ms ease-in-out forwards;
 }
 
 .titles ul {
@@ -37,7 +47,7 @@ body {
     display: flex;
     justify-content: center;
     list-style: none;
-    margin: 0;
+    margin: 0 0 0 -1rem;
 }
 .titles ul li {
     width: 95%;
@@ -57,13 +67,23 @@ body {
     background-color: transparent;
 }
 .titles img {
-    width: 20%;
+    width: 40%;
+}
+.titles img:hover {
+    background-color: antiquewhite;
+    border-radius: 50px;
+    box-shadow: 0 5px 12px 0 rgba(91, 154, 248, 0.906);
 }
 
+.input-box,
+.translate-box {
+    border: 1px solid rgb(234, 233, 233);
+    border-radius: 5px;
+}
 .input-box input {
     margin-top: 1rem;
     width: 98%;
-    padding-bottom: 5rem;
+    padding: 0 0 5rem 0.5rem;
     border: none;
     font-size: 1.2rem;
 }
@@ -73,10 +93,33 @@ body {
 .mic-speaker {
     display: flex;
     justify-content: space-between;
+    margin: 0 0.2rem 0 0.2rem;
 }
-.mic-speaker img {
+.mic-speaker img,
+.speaker-copy img {
     width: 8%;
 }
+#arrow-down-translate {
+    width: 30%;
+}
+.translate-box{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(234, 233, 233);
+    border-radius: 5px;
+}
+.translate p {
+    width: 95%;
+    padding: 0 0 5rem 0.5rem;
+}
+.speaker-copy{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0.2rem 0 0.2rem;
+}
+
+
+
 
 .rotate {
     transform: rotate(180deg) ease-in-out;
@@ -89,4 +132,34 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+@keyframes fadeDown {
+     0% {
+        opacity: 0;
+        transform: translateY(-250px)
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+@keyframes fadeRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-120px)
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0)
+    }
+}
+@keyframes fadeLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(120px)
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0)
+    }
 }
