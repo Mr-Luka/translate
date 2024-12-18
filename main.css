@@ -43,10 +43,50 @@ body {
     width: 95%;
     font-size: 0.9rem;
     white-space: nowrap;
-    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+}
+.titles ul li:hover {
+    color: rgb(31, 147, 225);
+    font-weight: 900;
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+.titles ul li:last-child {
+    background-color: transparent;
+}
+.titles img {
+    width: 20%;
 }
 
-img {
-    width: 20%;
+.input-box input {
+    margin-top: 1rem;
+    width: 98%;
+    padding-bottom: 5rem;
+    border: none;
+    font-size: 1.2rem;
+}
+.input-box input:focus {
+    outline: none;
+}
+.mic-speaker {
+    display: flex;
+    justify-content: space-between;
+}
+.mic-speaker img {
+    width: 8%;
+}
 
+.rotate {
+    transform: rotate(180deg) ease-in-out;
+}
+
+
+
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
 }
