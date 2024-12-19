@@ -18,6 +18,8 @@ h1 {
 }
 .big-wrapper {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
     margin-top: 5vh;
     width: 90%;
@@ -35,7 +37,7 @@ h1 {
 }
 
 .lower-window{
-    margin-top: 3rem;
+    margin-top: 2rem;
     animation: fadeLeft 1700ms ease-in-out forwards;
 }
 .upper-window {
@@ -102,6 +104,21 @@ h1 {
 #arrow-down-translate {
     width: 30%;
 }
+.swap-logo-container{
+    display: flex;
+    justify-content: center;
+}
+#swap-logo {
+    margin-top: 2rem;
+    margin-bottom: 0;
+    width: 10%;
+    border-radius: 50px;
+}
+#swap-logo:hover {
+    scale: 1.2;
+    animation: rotate 1000ms;
+}
+
 .translate-box{
     display: flex;
     flex-direction: column;
@@ -123,6 +140,9 @@ h1 {
 
 .rotate {
     transform: rotate(180deg) ease-in-out;
+}
+.hidden {
+    display: none;
 }
 
 
@@ -161,5 +181,13 @@ h1 {
     100% {
         opacity: 1;
         transform: translateX(0)
+    }
+}
+@keyframes appear {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
     }
 }
