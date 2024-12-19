@@ -9,6 +9,7 @@ body {
     justify-content: center;
 }
 h1 {
+    font-family: "Cabin Sketch", serif;
     font-size: 3rem;
     margin-top: 2rem;
     -webkit-text-stroke-width: 1px;
@@ -65,6 +66,9 @@ h1 {
     background-color: aliceblue;
     border-radius: 5px;
 }
+.titles ul li:first-of-type{
+    margin: 0 1.2rem 0 -1rem;
+}
 .titles ul li:last-child {
     background-color: transparent;
 }
@@ -100,6 +104,10 @@ h1 {
 .mic-speaker img,
 .speaker-copy img {
     width: 8%;
+}
+.mic-speaker img:hover,
+.speaker-copy img:hover {
+    scale: 1.5;
 }
 #arrow-down-translate {
     width: 30%;
