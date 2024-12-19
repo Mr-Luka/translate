@@ -73,6 +73,7 @@ h1 {
     background-color: transparent;
 }
 .titles img {
+    animation: up-and-down 1700ms ease-in-out infinite;
     width: 40%;
 }
 .titles img:hover {
@@ -238,5 +239,16 @@ h1 {
     }
     100%{
         opacity: 1;
+    }
+}
+@keyframes up-and-down {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-5px);
+    }
+    100%{
+        transform: translateY(0);
     }
 }
