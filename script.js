@@ -24,6 +24,7 @@ const speaker = document.querySelector('#speaker');
 const copy = document.querySelector('#copy');
 const swapLanguages = document.querySelector('#swap-logo');
 
+let isClicked = true;
 
 // function that will transfer typed words onto the translate window
 function typeTranslate (){
@@ -36,21 +37,24 @@ function typeTranslate (){
     })
 }
 typeTranslate()
-
 // function that will choose the language when clicked one of top 3 options
-function quickChoise(word){
+function quickChoise(){
     titleOptions.forEach(option=> {
-        option[1].addEventListener('click',()=>{
-            dictionaryApi('en', `${word}`)
-        });
-        option[2].addEventListener('click', ()=>{
-            dictionaryApi('es', `${word}`)
-        })
-        option[3].addEventListener('click', ()=>{
-            dictionaryApi('fr', `${word}`)
-        })
+
+        option.addEventListener('click',(word)=>{
+            titleOptions.forEach(title=> title.classList.remove('selected-language'));
+            option.classList.add('selected-language');
+            if(option.innerText === 'English'){
+                selectLanguageMenu.value = 'English';
+            } else if (option.innerText === 'Spanish'){
+                selectLanguageMenu.value = 'Spanish';
+            } else if (option.innerText === "French"){
+                selectLanguageMenu.value = 'French';
+            }
     })
+})
 }
+quickChoise()
 
 async function dictionaryApi(language, word){
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`);

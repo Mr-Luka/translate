@@ -63,6 +63,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content:space-around;
+    cursor: pointer;
 }
 .titles ul li:hover,
 .titles-translate ul li:hover {
@@ -70,6 +71,10 @@ h1 {
     font-weight: 900;
     background-color: aliceblue;
     border-radius: 5px;
+}
+.selected-language {
+    font-weight: 900;
+    color: rgb(31, 147, 225);
 }
 .titles ul li:first-of-type,
 .titles-translate ul li:first-of-type {
