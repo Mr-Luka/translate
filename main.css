@@ -47,14 +47,16 @@ h1 {
     animation: fadeRight 1700ms ease-in-out forwards;
 }
 
-.titles ul {
+.titles ul,
+.titles-translate ul {
     width: 95%;
     display: flex;
     justify-content: center;
     list-style: none;
     margin: 0 0 0 -1rem;
 }
-.titles ul li {
+.titles ul li,
+.titles-translate ul li {
     width: 95%;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -62,23 +64,28 @@ h1 {
     align-items: center;
     justify-content:space-around;
 }
-.titles ul li:hover {
+.titles ul li:hover,
+.titles-translate ul li:hover {
     color: rgb(31, 147, 225);
     font-weight: 900;
     background-color: aliceblue;
     border-radius: 5px;
 }
-.titles ul li:first-of-type{
+.titles ul li:first-of-type,
+.titles-translate ul li:first-of-type {
     margin: 0 1.2rem 0 -1rem;
 }
-.titles ul li:last-child {
+.titles ul li:last-child,
+.titles-translate ul li:last-child {
     background-color: transparent;
 }
-.titles img {
+.titles img,
+.titles-translate img {
     animation: up-and-down 1700ms ease-in-out infinite;
     width: 40%;
 }
-.titles img:hover {
+.titles img:hover,
+.titles-translate img:hover {
     background-color: antiquewhite;
     border-radius: 50px;
     box-shadow: 0 5px 12px 0 rgba(91, 154, 248, 0.906);
@@ -205,7 +212,8 @@ img.x-delete:hover{
 .select-language-translate select:focus {
     outline: none;
 }
-.languages-to-choose ul{
+.languages-to-choose ul,
+.languages-to-choose-translate ul {
     display: flex;
     flex-wrap: wrap;
 }
