@@ -24,7 +24,7 @@ const speaker = document.querySelector('#speaker');
 const copy = document.querySelector('#copy');
 const swapLanguages = document.querySelector('#swap-logo');
 
-let isClicked = true;
+let isClicked = false;
 
 // function that will transfer typed words onto the translate window
 function typeTranslate (){
@@ -37,11 +37,11 @@ function typeTranslate (){
     })
 }
 typeTranslate()
+
 // function that will choose the language when clicked one of top 3 options
 function quickChoise(){
     titleOptions.forEach(option=> {
-
-        option.addEventListener('click',(word)=>{
+        option.addEventListener('click',()=>{
             titleOptions.forEach(title=> title.classList.remove('selected-language'));
             option.classList.add('selected-language');
             if(option.innerText === 'English'){
@@ -51,10 +51,39 @@ function quickChoise(){
             } else if (option.innerText === "French"){
                 selectLanguageMenu.value = 'French';
             }
+        })
     })
-})
 }
 quickChoise()
+
+// Drop window when pressed on Arrow down button to choose languages
+arrowDownButtonTranslateOptions.addEventListener('click', (e)=>{
+    e.stopPropagation(); // Prevent this click from being detected by the window click listener
+    if(chooseLanguageWindow.classList.contains('hidden')){
+        chooseLanguageWindow.classList.remove('hidden');
+        inputBoxTextArea.classList.add('hidden')
+    } else {
+        closeLanguagesWindow()
+    }
+})
+
+// Function that will close the languages window
+function closeLanguagesWindow(){
+    chooseLanguageWindow.classList.add('hidden');
+    inputBoxTextArea.classList.remove('hidden');
+}
+
+// Event listener to close the window when clicking outside of it
+window.addEventListener('click',(e)=>{
+    // Check if the modal is open and the click target is not the modal or any of its children
+    if (!chooseLanguageWindow.classList.contains('hidden') && !chooseLanguageWindow.contains(e.target)){
+        closeLanguagesWindow()
+    }
+})
+
+
+
+
 
 async function dictionaryApi(language, word){
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`);
