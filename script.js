@@ -37,6 +37,20 @@ function typeTranslate (){
 }
 typeTranslate()
 
+// function that will choose the language when clicked one of top 3 options
+function quickChoise(word){
+    titleOptions.forEach(option=> {
+        option[1].addEventListener('click',()=>{
+            dictionaryApi('en', `${word}`)
+        });
+        option[2].addEventListener('click', ()=>{
+            dictionaryApi('es', `${word}`)
+        })
+        option[3].addEventListener('click', ()=>{
+            dictionaryApi('fr', `${word}`)
+        })
+    })
+}
 
 async function dictionaryApi(language, word){
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`);
