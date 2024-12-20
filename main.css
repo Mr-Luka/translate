@@ -232,6 +232,16 @@ img.x-delete:hover{
     list-style: none;
 }
 
+.languages-to-choose ul li:hover,
+.languages-to-choose-translate ul li:hover {
+    color: rgb(31, 147, 225);
+    font-weight: 900;
+    background-color: rgba(240, 248, 255, 0.64);
+    border-radius: 15px;
+    scale: 1.1;
+    cursor: pointer;
+}
+
 
 
 /* Will be added in JavaScript when the user presses certain buttons */

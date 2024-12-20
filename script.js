@@ -2,7 +2,7 @@
 const arrowDownButtonTranslateOptions = document.querySelector('#arrow-down');
 const chooseLanguageWindow = document.querySelector('.choose-language');
 const searchLanguage = document.querySelector('#search');
-const selectLanguageMenu = document.querySelector('.select-language select');
+const selectLanguageMenu = document.querySelector('#select-option');
 const languagesOffered = document.querySelector('.offered-langauges-while-typing');
 const inputBoxTextArea = document.querySelector('.input-box');
 const typeWords = document.querySelector('#input-text'); // area where I will type
@@ -82,7 +82,22 @@ window.addEventListener('click',(e)=>{
 })
 
 
+function chosenLanguageFromWindow (){
+    searchLanguage.addEventListener('input', ()=>{
+        const search = searchLanguage.value.toLowerCase() ;
+        console.log(selectedLan, search)
+    })
 
+}
+chosenLanguageFromWindow()
+
+// Change event that will capture the selected language from a drop down window, 
+// and populate the search language input with the selected language
+selectLanguageMenu.addEventListener('change', (e)=>{
+    searchLanguage.value = '';
+    const selectedLan = (e.target.value).toLowerCase();
+    searchLanguage.value = `${selectedLan}`
+})
 
 
 async function dictionaryApi(language, word){
