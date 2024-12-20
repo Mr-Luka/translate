@@ -25,6 +25,7 @@ const copy = document.querySelector('#copy');
 const swapLanguages = document.querySelector('#swap-logo');
 
 
+// function that will transfer typed words onto the translate window
 function typeTranslate (){
     translateLive.innerHTML = ``;
     typeWords.addEventListener('input',()=>{
@@ -35,3 +36,11 @@ function typeTranslate (){
     })
 }
 typeTranslate()
+
+
+async function dictionaryApi(language, word){
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`);
+    const data = await response.json();
+    console.log(data);
+}
+dictionaryApi('en', 'hello')
