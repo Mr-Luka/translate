@@ -5,7 +5,7 @@ const searchLanguage = document.querySelector('#search');
 const selectLanguageMenu = document.querySelector('.select-language select');
 const languagesOffered = document.querySelector('.offered-langauges-while-typing');
 const inputBoxTextArea = document.querySelector('.input-box');
-const typeWords = document.querySelector('#input-text');
+const typeWords = document.querySelector('#input-text'); // area where I will type
 const xDeleteBtn = document.querySelector('.x-delete');
 const microphone = document.querySelector('#microphone');
 const speakerType = document.querySelector('#speaker-type');
@@ -23,3 +23,15 @@ const translateLive = document.querySelector('.translate p');
 const speaker = document.querySelector('#speaker');
 const copy = document.querySelector('#copy');
 const swapLanguages = document.querySelector('#swap-logo');
+
+
+function typeTranslate (){
+    translateLive.innerHTML = ``;
+    typeWords.addEventListener('input',()=>{
+        const text = typeWords.value;
+        translateLive.innerHTML = `${text}`;
+
+        console.log(text);
+    })
+}
+typeTranslate()
