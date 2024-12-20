@@ -23,7 +23,8 @@ h1 {
     align-items: center;
     flex-direction: column;
     margin-top: 1vh;
-    width: 90%;
+    margin-bottom: 5rem;
+    width: 80%;
 }
 
 .upper-window,
@@ -33,6 +34,7 @@ h1 {
     background-color: white;
     margin-bottom: auto;
     padding: 20px;
+    width: 100%;
     border-radius: 15px;
     box-shadow: 0 8px 32px 0 rgba(4, 23, 106, 0.752);
 }
@@ -86,16 +88,39 @@ h1 {
 .translate-box {
     border: 1px solid rgb(234, 233, 233);
     border-radius: 5px;
+    overflow-wrap: break-word;
 }
-.input-box input {
+div.input-and-x{
+    display: flex;
+    position: relative;
+}
+textarea#input-text {
     margin-top: 1rem;
-    width: 98%;
+    width: 100%;
     padding: 0 0 5rem 0.5rem;
     border: none;
+    resize: none;
+    scroll-behavior: unset;
+    height: auto;
     font-size: 1.2rem;
+    overflow-wrap: break-word;
 }
-.input-box input:focus {
+
+#input-text:focus {
     outline: none;
+}
+
+img.x-delete {
+    position: relative;
+    justify-content: flex-end;
+    width: 8%;
+    height: 5%;
+    margin: 0 0 0 -2.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+img.x-delete:hover{
+    scale: 1.2;
 }
 .mic-speaker {
     display: flex;
@@ -141,7 +166,7 @@ h1 {
 .speaker-copy{
     display: flex;
     justify-content: space-between;
-    margin: 0 0.2rem 0 0.2rem;
+    margin: 0 0.2rem 0 0.5rem;
 }
 
 
