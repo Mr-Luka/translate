@@ -1,6 +1,7 @@
 import {languages} from './languages.js';
 console.log(languages);
 // Upper window where user will type the words or click buttons
+const detectLanguage = document.querySelector('#detect-language');
 const arrowDownButtonTranslateOptions = document.querySelector('#arrow-down');
 const chooseLanguageWindow = document.querySelector('.choose-language');
 const searchLanguage = document.querySelector('#search');
@@ -64,6 +65,7 @@ arrowDownButtonTranslateOptions.addEventListener('click', (e)=>{
     if(chooseLanguageWindow.classList.contains('hidden')){
         chooseLanguageWindow.classList.remove('hidden');
         inputBoxTextArea.classList.add('hidden')
+        listOfLanguages()
     } else {
         closeLanguagesWindow()
     }
@@ -83,10 +85,16 @@ window.addEventListener('click',(e)=>{
     }
 })
 
-// function that will populate the 
+// function that will dynamically filter throught offered languages while I am typing the language name
 function chosenLanguageFromWindow (){
     searchLanguage.addEventListener('input', ()=>{
-        const search = searchLanguage.value.toLowerCase() ;
+        const search = searchLanguage.value.toLowerCase();
+        const values = Object.values(languages);
+
+        // Filtering through the object values of the object of languages while searching in the search bar
+        const filteredLanguages = values.filter((language) => language.toLowerCase().startsWith(search)); 
+        console.log(filteredLanguages) 
+
         console.log(search)
     })
 
@@ -98,29 +106,36 @@ chosenLanguageFromWindow()
 selectLanguageMenu.addEventListener('change', (e)=>{
     searchLanguage.value = '';
     const selectedLan = (e.target.value).toLowerCase();
-    searchLanguage.value = `${selectedLan}`
+    searchLanguage.value = `${selectedLan}`;
+    
 })
 
+
+// function that will show the list of languages when the window is open, each language offered is 
+// a list item in the list of languages and has a click event
 function listOfLanguages (){
     const keys = Object.keys(languages);
     const values = Object.values(languages);
+    // clear the existing list to prevent duplicates
+    languagesOffered.innerHTML = '';
 
+    // add up to 18 languages to the list
     for (let i = 0; i < 18; i++){
         const li = document.createElement('li');
         li.textContent = languages[keys[i]];
         languagesOffered.appendChild(li);
 
+        // add click event listener to each language item
         li.addEventListener('click', ()=>{
             selectLanguageMenu.value = keys[i];
             searchLanguage.value = '';
-
             searchLanguage.value = values[i];
-            
-            
+            detectLanguage.innerText = values[i];
+            closeLanguagesWindow()
         })
     }
 }
-listOfLanguages()
+
 
 // function captureTheLanguage (selectedLang, lang, data) {
 //     const langCode = lang.toLowerCase();
