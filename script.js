@@ -85,21 +85,7 @@ window.addEventListener('click',(e)=>{
     }
 })
 
-// function that will dynamically filter throught offered languages while I am typing the language name
-function chosenLanguageFromWindow (){
-    searchLanguage.addEventListener('input', ()=>{
-        const search = searchLanguage.value.toLowerCase();
-        const values = Object.values(languages);
 
-        // Filtering through the object values of the object of languages while searching in the search bar
-        const filteredLanguages = values.filter((language) => language.toLowerCase().startsWith(search)); 
-        console.log(filteredLanguages) 
-
-        console.log(search)
-    })
-
-}
-chosenLanguageFromWindow()
 
 // Change event that will capture the selected language from a drop down window, 
 // and populate the search language input with the selected language
@@ -113,29 +99,55 @@ selectLanguageMenu.addEventListener('change', (e)=>{
 
 // function that will show the list of languages when the window is open, each language offered is 
 // a list item in the list of languages and has a click event
-function listOfLanguages (){
-    const keys = Object.keys(languages);
-    const values = Object.values(languages);
-    // clear the existing list to prevent duplicates
+function listOfLanguages(filteredLanguages = Object.values(languages)) {
+    // Clear the existing list to prevent duplicates
     languagesOffered.innerHTML = '';
 
-    // add up to 18 languages to the list
-    for (let i = 0; i < 18; i++){
+    // Populate the list with filtered languages
+    filteredLanguages.forEach(language => {
         const li = document.createElement('li');
-        li.textContent = languages[keys[i]];
+        li.textContent = language;
         languagesOffered.appendChild(li);
 
-        // add click event listener to each language item
-        li.addEventListener('click', ()=>{
-            selectLanguageMenu.value = keys[i];
-            searchLanguage.value = '';
-            searchLanguage.value = values[i];
-            detectLanguage.innerText = values[i];
-            closeLanguagesWindow()
-        })
-    }
+        // Add click event listener to each language item
+        li.addEventListener('click', () => {
+            // Find the key associated with the selected language
+            const languageKey = Object.keys(languages).find(key => languages[key] === language);
+
+            if (languageKey) { // Ensure the key is found before using it
+                selectLanguageMenu.value = languageKey;
+                searchLanguage.value = language;
+                detectLanguage.innerText = language;
+                closeLanguagesWindow();
+            } else {
+                console.error(`Language key for "${language}" not found.`);
+            }
+        });
+    });
 }
 
+// function that will dynamically filter throught offered languages while I am typing the language name
+function chosenLanguageFromWindow (){
+    searchLanguage.addEventListener('input', ()=>{
+        const search = searchLanguage.value.toLowerCase();
+        const values = Object.values(languages);
+
+        // Filtering through the object values of the object of languages while searching in the search bar
+        const filteredLanguages = values.filter((language) => language.toLowerCase().startsWith(search)); 
+        
+        if( search === ''){
+            listOfLanguages(values.slice(0, 18));
+        } else {
+            listOfLanguages(filteredLanguages);
+        }
+        console.log(filteredLanguages) 
+
+        console.log(search)
+    })
+
+}
+chosenLanguageFromWindow()
+listOfLanguages();
 
 // function captureTheLanguage (selectedLang, lang, data) {
 //     const langCode = lang.toLowerCase();
