@@ -1,9 +1,11 @@
+import {languages} from './languages.js';
+console.log(languages);
 // Upper window where user will type the words or click buttons
 const arrowDownButtonTranslateOptions = document.querySelector('#arrow-down');
 const chooseLanguageWindow = document.querySelector('.choose-language');
 const searchLanguage = document.querySelector('#search');
 const selectLanguageMenu = document.querySelector('#select-option');
-const languagesOffered = document.querySelector('.offered-langauges-while-typing');
+const languagesOffered = document.querySelector('.offered-langauges-while-typing ul');
 const inputBoxTextArea = document.querySelector('.input-box');
 const typeWords = document.querySelector('#input-text'); // area where I will type
 const xDeleteBtn = document.querySelector('.x-delete');
@@ -81,11 +83,11 @@ window.addEventListener('click',(e)=>{
     }
 })
 
-
+// function that will populate the 
 function chosenLanguageFromWindow (){
     searchLanguage.addEventListener('input', ()=>{
         const search = searchLanguage.value.toLowerCase() ;
-        console.log(selectedLan, search)
+        console.log(search)
     })
 
 }
@@ -99,10 +101,31 @@ selectLanguageMenu.addEventListener('change', (e)=>{
     searchLanguage.value = `${selectedLan}`
 })
 
+function listOfLanguages (){
+    const keys = Object.keys(languages);
+    for (let i = 0; i < 18; i++){
+        const li = document.createElement('li');
+        li.textContent = languages[keys[i]];
+        languagesOffered.appendChild(li);
+    }
+}
+listOfLanguages()
+
+// function captureTheLanguage (selectedLang, lang, data) {
+//     const langCode = lang.toLowerCase();
+//     const langName = selectedLang.toLowerCase();
+
+// }
+
+
 
 async function dictionaryApi(language, word){
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`);
     const data = await response.json();
-    console.log(data);
+    console.log(data[0])
+    console.log(data[0].phonetics[0].audio) // audio of the word
+    console.log(data[0].word); // the word
 }
 dictionaryApi('en', 'hello')
+
+
