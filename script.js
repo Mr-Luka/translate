@@ -103,10 +103,21 @@ selectLanguageMenu.addEventListener('change', (e)=>{
 
 function listOfLanguages (){
     const keys = Object.keys(languages);
+    const values = Object.values(languages);
+
     for (let i = 0; i < 18; i++){
         const li = document.createElement('li');
         li.textContent = languages[keys[i]];
         languagesOffered.appendChild(li);
+
+        li.addEventListener('click', ()=>{
+            selectLanguageMenu.value = keys[i];
+            searchLanguage.value = '';
+
+            searchLanguage.value = values[i];
+            
+            
+        })
     }
 }
 listOfLanguages()
