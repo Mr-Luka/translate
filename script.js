@@ -15,20 +15,14 @@ const speakerType = document.querySelector('#speaker-type');
 const titleOptions = document.querySelectorAll('.titles ul li');
 
 // lower window where user will get the results of the translate and also click buttons for sound or copy etc
-const titleOptions2= document.querySelectorAll('.titles-translate ul li');
-const arrowDownButton2 = document.querySelector('#arrow-down-translate');
-const chooseLanguageWindow2 = document.querySelector('.choose-language-translate');
-const searchLanguage2 = document.querySelector('#search-language');
-const selectLanguageMenu2 = document.querySelector('.select-language-translate select');
-const languagesOffered2 = document.querySelector('.offered-langauges-while-typing-translate');
-const translateBox = document.querySelector('.translate-box');
-const translateLive = document.querySelector('.translate p');
+const word = document.querySelector('#word-dic');
+const phonetic = document.querySelector('#phonetic-dic');
+const definition = document.querySelector('#definition');
 const speaker = document.querySelector('#speaker');
 const copy = document.querySelector('#copy');
-const swapLanguages = document.querySelector('#swap-logo');
 
 let chosenLanguage;
-let translateTo;
+
 
 
 // function that will choose the language when clicked one of top 3 options
@@ -51,26 +45,6 @@ function quickChoise(){
     })
 }
 quickChoise()
-
-function translateToQuick(){
-    titleOptions2.forEach(option=> {
-        option.addEventListener('click',()=>{
-            titleOptions2.forEach(title=> title.classList.remove('selected-language'));
-            option.classList.add('selected-language');
-            if(option.innerText === 'English'){
-                translateTo = 'en';
-                selectLanguageMenu2.value = 'English';
-            } else if (option.innerText === 'Spanish'){
-                translateTo = 'es';
-                selectLanguageMenu2.value = 'Spanish';
-            } else if (option.innerText === "French"){
-                selectLanguageMenu2.value = 'French';
-                translateTo = 'fr';
-            }
-        })
-    })
-}
-translateToQuick()
 
 
 // Drop window when pressed on Arrow down button to choose languages
@@ -195,7 +169,7 @@ async function dictionaryApi(lang, word) {
     return data[0].word;
   } catch (error) {
     console.error(error.message);
-    // Handle the error here, e.g. display an error message to the user
+   
     return null;
   }
 }
