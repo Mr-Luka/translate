@@ -206,40 +206,43 @@ function typeTranslate() {
 typeTranslate()
 
 async function dictionaryApi(lang, word) {
-  try {
-    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${word}`);
-    if (!response.ok) {
-      // Handle non-2xx HTTP responses
-      if (response.status === 404) {
-        return { error: "Word not found" }; // Specific message for 404
-      }
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    if (!data || data.length === 0) {
-      return { error: "No data found" };
-    }
-
-    const firstEntry = data[0];
-
-    let phoneticText = "Phonetics not available"; // Default message
-
-    if (firstEntry.phonetics && firstEntry.phonetics.length > 0) {
-        for(const phonetic of firstEntry.phonetics){
-            if(phonetic.text){
-                phoneticText = phonetic.text;
-                break;
-            }
+    try {
+      const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${word}`);
+      if (!response.ok) {
+        // Handle non-2xx HTTP responses
+        if (response.status === 404) {
+          return { error: "Word not found" }; // Specific message for 404
         }
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      if (!data || data.length === 0) {
+        return { error: "No data found" };
+      }
+  
+      const firstEntry = data[0];
+  
+      let phoneticText = "Phonetics not available"; // Default message
+      let audioUrl;
+  
+      if (firstEntry.phonetics && firstEntry.phonetics.length > 0) {
+          for(const phonetic of firstEntry.phonetics){
+              if(phonetic.text){
+                  phoneticText = phonetic.text;
+              }
+              if(phonetic.audio){
+                audioUrl = phonetic.audio;
+              }
+          }
+      }
+  
+      const definition = firstEntry.meanings?.[0]?.definitions?.[0]?.definition || "Definition not available";
+  
+      return { word: firstEntry.word, definition: definition, phonetics: phoneticText, audio: audioUrl };
+    } catch (error) {
+      console.error("API request error:", error);
+      return { error: "API request failed" };
     }
-
-    const definition = firstEntry.meanings?.[0]?.definitions?.[0]?.definition || "Definition not available";
-
-    return { word: firstEntry.word, definition: definition, phonetics: phoneticText };
-  } catch (error) {
-    console.error("API request error:", error);
-    return { error: "API request failed" };
   }
-}
 
