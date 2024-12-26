@@ -21,7 +21,7 @@ const definition = document.querySelector('#definition');
 const speaker = document.querySelector('#speaker');
 const copy = document.querySelector('#copy');
 
-let chosenLanguage;
+const chosenLanguage = 'en';
 
 
 
@@ -33,13 +33,10 @@ function quickChoise(){
             option.classList.add('selected-language');
             if(option.innerText === 'English'){
                 selectLanguageMenu.value = 'English';
-                chosenLanguage = 'en';
             } else if (option.innerText === 'Spanish'){
-                chosenLanguage = 'es';
                 selectLanguageMenu.value = 'Spanish';
             } else if (option.innerText === "French"){
                 selectLanguageMenu.value = 'French';
-                chosenLanguage = 'fr';
             }
         })
     })
@@ -106,9 +103,6 @@ function listOfLanguages(filteredLanguages = Object.values(languages)) {
                 selectLanguageMenu.value = languageKey;
                 searchLanguage.value = language;
                 detectLanguage.innerText = language;
-                chosenLanguage = languageKey.toLowerCase();
-                console.log('List of Languages:', chosenLanguage)
-       
                 closeLanguagesWindow();
             } else {
                 console.error(`Language key for "${language}" not found.`);
@@ -213,6 +207,4 @@ async function dictionaryApi(lang, word) {
     return { error: "API request failed" };
   }
 }
-
-
 
