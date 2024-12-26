@@ -199,6 +199,6 @@ async function dictionaryApi(lang, word) {
     return null;
   }
 }
-// dictionaryApi('en', 'hello')
+dictionaryApi('en', 'hello')
 
 
