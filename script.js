@@ -10,7 +10,6 @@ const languagesOffered = document.querySelector('.offered-langauges-while-typing
 const inputBoxTextArea = document.querySelector('.input-box');
 const typeWords = document.querySelector('#input-text'); // area where I will type
 const xDeleteBtn = document.querySelector('.x-delete');
-const microphone = document.querySelector('#microphone');
 const speakerType = document.querySelector('#speaker-type');
 const titleOptions = document.querySelectorAll('.titles ul li');
 
@@ -135,7 +134,35 @@ chosenLanguageFromWindow()
 listOfLanguages();
 
 
+speaker.addEventListener('click', async ()=> {
+    const text = word.textContent;
+    if(text && chosenLanguage){
+        try {
+            const data = await dictionaryApi(chosenLanguage, text);
+            if(data && data.audio) {
+                playAudio(data.audio);
+            } else {
+                console.log('Audio not available for this word.');
+                alert('Audio not available for this word.');
+            }
+        } catch(error) {
+            console.error('Error fetching audio:', error);
+            alert('Error playing audio.');
+        }
+    }
+});
 
+// Text-to-speach function
+function speakText(text, lang) {
+    if('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = lang; // set the language
+        speechSynthesis.speak(utterance);
+    } else {
+        console.error('Text-to-speech not supported.');
+        alert('Text-to-speech is not supported in your browser.');
+    }
+}
 
 // function that will transfer typed words onto the translate window
 function typeTranslate() {
