@@ -165,11 +165,16 @@ async function dictionaryApi(lang, word) {
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${word}`);
     if (!response.ok) throw new Error('API failed');
     const data = await response.json();
-    console.log(data);
-    return data[0].word;
+    // check if the data is available for the word
+    if (data.length === 0) return null; // no data found for the word.
+
+    const firstEntry = data[0];
+    const definition = firstEntry.meanings[0].definition[0].definition;
+    const phonetics = firstEntry.phonetics?.[0].text || 'Phonetics not available';
+
+    return { word: firstEntry.word, definition: definition, phonetics: phonetics}
   } catch (error) {
     console.error(error.message);
-   
     return null;
   }
 }
