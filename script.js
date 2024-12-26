@@ -164,6 +164,14 @@ function speakText(text, lang) {
     }
 }
 
+function playAudio(audioUrl) {
+    const audio = new Audio(audioUrl);
+    audio.play().catch(error => {
+        console.error("Error playing audio:", error);
+        alert("Error playing audio."); // Inform the user
+    })
+}
+
 // function that will transfer typed words onto the translate window
 function typeTranslate() {
   typeWords.addEventListener('input', async () => {
