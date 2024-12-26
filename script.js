@@ -144,40 +144,75 @@ listOfLanguages();
 
 
 // function that will transfer typed words onto the translate window
-function typeTranslate (){
-    typeWords.addEventListener('input',async ()=>{
-        const text = typeWords.value;
-        if(text.trim() === ''){
-            translateLive.innerHTML = '';
-            return;
-        }
-    // Fetch translation in the choosen language
-    const translatedText = await dictionaryApi(translateTo, text);
-    translateLive.innerHTML = translatedText || 'Translation not available';
+function typeTranslate() {
+  typeWords.addEventListener('input', async () => {
+    const text = typeWords.value.trim();
 
-        console.log(text);
-    })
+    if (text === '') {
+      word.textContent = '';
+      phonetic.textContent = '';
+      definition.textContent = '';
+      return;
+    }
+
+    if (!chosenLanguage) {
+      console.error('Please select a language');
+      return;
+    }
+
+    const translatedData = await dictionaryApi(chosenLanguage, text);
+
+    if (!translatedData) {
+      word.textContent = 'Word not found';
+      phonetic.textContent = '';
+      definition.textContent = '';
+      return;
+    }
+
+    word.textContent = translatedData.word;
+    phonetic.textContent = translatedData.phonetics;
+    definition.textContent = translatedData.definition;
+  });
 }
 typeTranslate()
 
 async function dictionaryApi(lang, word) {
   try {
     const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${word}`);
-    if (!response.ok) throw new Error('API failed');
+    if (!response.ok) {
+      // Handle non-2xx HTTP responses
+      if (response.status === 404) {
+        return { error: "Word not found" }; // Specific message for 404
+      }
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
     const data = await response.json();
-    // check if the data is available for the word
-    if (data.length === 0) return null; // no data found for the word.
+    if (!data || data.length === 0) {
+      return { error: "No data found" };
+    }
 
     const firstEntry = data[0];
-    const definition = firstEntry.meanings[0].definition[0].definition;
-    const phonetics = firstEntry.phonetics?.[0].text || 'Phonetics not available';
 
-    return { word: firstEntry.word, definition: definition, phonetics: phonetics}
+    let phoneticText = "Phonetics not available"; // Default message
+
+    if (firstEntry.phonetics && firstEntry.phonetics.length > 0) {
+        for(const phonetic of firstEntry.phonetics){
+            if(phonetic.text){
+                phoneticText = phonetic.text;
+                break;
+            }
+        }
+    }
+
+    const definition = firstEntry.meanings?.[0]?.definitions?.[0]?.definition || "Definition not available";
+
+    return { word: firstEntry.word, definition: definition, phonetics: phoneticText };
   } catch (error) {
-    console.error(error.message);
-    return null;
+    console.error("API request error:", error);
+    return { error: "API request failed" };
   }
 }
-dictionaryApi('en', 'hello')
+
 
 
