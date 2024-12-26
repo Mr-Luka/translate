@@ -242,12 +242,6 @@ img.x-delete:hover{
     cursor: pointer;
 }
 
-
-
-/* Will be added in JavaScript when the user presses certain buttons */
-.rotate {
-    transform: rotate(180deg) ease-in-out;
-}
 .hidden {
     display: none;
 }

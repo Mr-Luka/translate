@@ -1,5 +1,5 @@
 import {languages} from './languages.js';
-console.log(languages);
+
 // Upper window where user will type the words or click buttons
 const detectLanguage = document.querySelector('#detect-language');
 const arrowDownButtonTranslateOptions = document.querySelector('#arrow-down');
@@ -27,19 +27,9 @@ const speaker = document.querySelector('#speaker');
 const copy = document.querySelector('#copy');
 const swapLanguages = document.querySelector('#swap-logo');
 
-let isClicked = false;
+let chosenLanguage;
+let translateTo;
 
-// function that will transfer typed words onto the translate window
-function typeTranslate (){
-    translateLive.innerHTML = ``;
-    typeWords.addEventListener('input',()=>{
-        const text = typeWords.value;
-        translateLive.innerHTML = `${text}`;
-
-        console.log(text);
-    })
-}
-typeTranslate()
 
 // function that will choose the language when clicked one of top 3 options
 function quickChoise(){
@@ -49,15 +39,39 @@ function quickChoise(){
             option.classList.add('selected-language');
             if(option.innerText === 'English'){
                 selectLanguageMenu.value = 'English';
+                chosenLanguage = 'en';
             } else if (option.innerText === 'Spanish'){
+                chosenLanguage = 'es';
                 selectLanguageMenu.value = 'Spanish';
             } else if (option.innerText === "French"){
                 selectLanguageMenu.value = 'French';
+                chosenLanguage = 'fr';
             }
         })
     })
 }
 quickChoise()
+
+function translateToQuick(){
+    titleOptions2.forEach(option=> {
+        option.addEventListener('click',()=>{
+            titleOptions2.forEach(title=> title.classList.remove('selected-language'));
+            option.classList.add('selected-language');
+            if(option.innerText === 'English'){
+                translateTo = 'en';
+                selectLanguageMenu2.value = 'English';
+            } else if (option.innerText === 'Spanish'){
+                translateTo = 'es';
+                selectLanguageMenu2.value = 'Spanish';
+            } else if (option.innerText === "French"){
+                selectLanguageMenu2.value = 'French';
+                translateTo = 'fr';
+            }
+        })
+    })
+}
+translateToQuick()
+
 
 // Drop window when pressed on Arrow down button to choose languages
 arrowDownButtonTranslateOptions.addEventListener('click', (e)=>{
@@ -118,6 +132,9 @@ function listOfLanguages(filteredLanguages = Object.values(languages)) {
                 selectLanguageMenu.value = languageKey;
                 searchLanguage.value = language;
                 detectLanguage.innerText = language;
+                chosenLanguage = languageKey.toLowerCase();
+                console.log('List of Languages:', chosenLanguage)
+       
                 closeLanguagesWindow();
             } else {
                 console.error(`Language key for "${language}" not found.`);
@@ -149,21 +166,39 @@ function chosenLanguageFromWindow (){
 chosenLanguageFromWindow()
 listOfLanguages();
 
-// function captureTheLanguage (selectedLang, lang, data) {
-//     const langCode = lang.toLowerCase();
-//     const langName = selectedLang.toLowerCase();
-
-// }
 
 
 
-async function dictionaryApi(language, word){
-    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${language}/${word}`);
-    const data = await response.json();
-    console.log(data[0])
-    console.log(data[0].phonetics[0].audio) // audio of the word
-    console.log(data[0].word); // the word
+// function that will transfer typed words onto the translate window
+function typeTranslate (){
+    typeWords.addEventListener('input',async ()=>{
+        const text = typeWords.value;
+        if(text.trim() === ''){
+            translateLive.innerHTML = '';
+            return;
+        }
+    // Fetch translation in the choosen language
+    const translatedText = await dictionaryApi(translateTo, text);
+    translateLive.innerHTML = translatedText || 'Translation not available';
+
+        console.log(text);
+    })
 }
-dictionaryApi('en', 'hello')
+typeTranslate()
+
+async function dictionaryApi(lang, word) {
+  try {
+    const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/${lang}/${word}`);
+    if (!response.ok) throw new Error('API failed');
+    const data = await response.json();
+    console.log(data);
+    return data[0].word;
+  } catch (error) {
+    console.error(error.message);
+    // Handle the error here, e.g. display an error message to the user
+    return null;
+  }
+}
+// dictionaryApi('en', 'hello')
 
 
