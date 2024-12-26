@@ -154,15 +154,20 @@ speaker.addEventListener('click', async ()=> {
 
 // Text-to-speach function
 function speakText(text, lang) {
-    if('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = lang; // set the language
-        speechSynthesis.speak(utterance);
-    } else {
-        console.error('Text-to-speech not supported.');
-        alert('Text-to-speech is not supported in your browser.');
-    }
+  if ('speechSynthesis' in window) {
+    // ... rest of the TTS code
+  } else {
+    console.error('Text-to-speech not supported.');
+    alert('Text-to-speech is not supported in your browser.');
+  }
 }
+
+speakerType.addEventListener('click', () => {
+  const text = typeWords.value.trim();
+  if (text) {
+    speakText(text, chosenLanguage); // Call TTS function with text and language
+  }
+});
 
 function playAudio(audioUrl) {
     const audio = new Audio(audioUrl);
