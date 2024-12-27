@@ -154,10 +154,19 @@ speaker.addEventListener('click', async ()=> {
 
 // Text-to-speach function
 function speakText(text, lang) {
-  if ('speechSynthesis' in window) {
-    // ... rest of the TTS code
+  if ('speechSynthesis' in window) { // Check for browser support
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.text = text; // The text to speak
+    utterance.lang = lang || 'en-US'; // Set the language (default to US English)
+    // Optional settings:
+    // utterance.voice = speechSynthesis.getVoices().find(voice => voice.name === 'Google US English'); // Example voice selection
+    utterance.rate = 1; // Speech rate (0.1 to 10)
+    utterance.pitch = 1; // Speech pitch (0 to 2)
+
+    speechSynthesis.speak(utterance);
   } else {
-    console.error('Text-to-speech not supported.');
+    console.error('Text-to-speech not supported in this browser.');
     alert('Text-to-speech is not supported in your browser.');
   }
 }
@@ -166,6 +175,16 @@ speakerType.addEventListener('click', () => {
   const text = typeWords.value.trim();
   if (text) {
     speakText(text, chosenLanguage); // Call TTS function with text and language
+  }
+});
+
+copy.addEventListener('click', () => {
+  const textToCopy = word.textContent;
+  if (textToCopy && navigator.clipboard && navigator.clipboard.writeText) {
+    // ... rest of the copy code
+  } else {
+    console.error('Copy functionality not supported in your browser.');
+    alert('Copying text is not supported in your browser. Please consider upgrading.');
   }
 });
 
