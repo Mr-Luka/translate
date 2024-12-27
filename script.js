@@ -134,23 +134,38 @@ chosenLanguageFromWindow()
 listOfLanguages();
 
 
-speaker.addEventListener('click', async ()=> {
+speaker.addEventListener('click', async () => {
     const text = word.textContent;
-    if(text && chosenLanguage){
+    if (text && chosenLanguage) {
         try {
             const data = await dictionaryApi(chosenLanguage, text);
-            if(data && data.audio) {
-                playAudio(data.audio);
+            if (data && data.audio) {
+                console.log("Audio URL:", data.audio); // Check the URL in the console
+                playAudio(encodeURI(data.audio)); // Encode the URL
             } else {
                 console.log('Audio not available for this word.');
-                alert('Audio not available for this word.');
+                alert('Audio pronunciation not available for this word.');
             }
-        } catch(error) {
+        } catch (error) {
             console.error('Error fetching audio:', error);
             alert('Error playing audio.');
         }
     }
 });
+
+function playAudio(audioUrl) {
+    const audio = new Audio(audioUrl);
+    audio.addEventListener('error', (error) => {
+        console.error("Error loading audio:", error);
+        alert("Error loading audio. The audio file might be corrupted or unavailable.");
+    });
+
+    audio.play()
+        .catch(error => {
+            console.error("Error playing audio:", error);
+            alert("Error playing audio.");
+        });
+}
 
 // Text-to-speach function
 function speakText(text, lang) {
