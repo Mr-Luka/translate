@@ -159,10 +159,7 @@ function speakText(text, lang) {
 
     utterance.text = text; // The text to speak
     utterance.lang = lang || 'en-US'; // Set the language (default to US English)
-    // Optional settings:
-    // utterance.voice = speechSynthesis.getVoices().find(voice => voice.name === 'Google US English'); // Example voice selection
-    utterance.rate = 1; // Speech rate (0.1 to 10)
-    utterance.pitch = 1; // Speech pitch (0 to 2)
+
 
     speechSynthesis.speak(utterance);
   } else {
@@ -180,21 +177,42 @@ speakerType.addEventListener('click', () => {
 
 copy.addEventListener('click', () => {
   const textToCopy = word.textContent;
-  if (textToCopy && navigator.clipboard && navigator.clipboard.writeText) {
-    // ... rest of the copy code
+
+  if (!textToCopy) {
+    console.log("Nothing to copy."); // Or a user-friendly message
+    return; // Exit if there's nothing to copy
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        console.log("Text copied to clipboard");
+        // Provide visual feedback (optional)
+        const copyMessage = document.createElement('span');
+        copyMessage.textContent = "Copied!";
+        copyMessage.style.position = 'absolute'; // Position relative to the copy button
+        copyMessage.style.top = '100%'; // Position below the button
+        copyMessage.style.left = '50%';
+        copyMessage.style.transform = 'translateX(-50%)';
+        copyMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        copyMessage.style.color = 'white';
+        copyMessage.style.padding = '5px 10px';
+        copyMessage.style.borderRadius = '5px';
+        copy.parentNode.appendChild(copyMessage); // Add to the parent of the copy button
+
+        setTimeout(() => {
+          copyMessage.remove(); // Remove the message after a short delay
+        }, 1500); // 1.5 seconds
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+        alert("Failed to copy text.");
+      });
   } else {
     console.error('Copy functionality not supported in your browser.');
     alert('Copying text is not supported in your browser. Please consider upgrading.');
   }
 });
-
-function playAudio(audioUrl) {
-    const audio = new Audio(audioUrl);
-    audio.play().catch(error => {
-        console.error("Error playing audio:", error);
-        alert("Error playing audio."); // Inform the user
-    })
-}
 
 // function that will transfer typed words onto the translate window
 function typeTranslate() {
